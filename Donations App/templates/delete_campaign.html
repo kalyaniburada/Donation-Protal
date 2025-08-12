@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card p-4 shadow">
+        <h2 class="text-danger">⚠️ Confirm Deletion</h2>
+        <p>Are you sure you want to delete the campaign <strong>"{{ campaign.title }}"</strong>?</p>
+
+        {% if campaign.donation_set.exists %}
+            <div class="alert alert-warning">
+                🚫 This campaign cannot be deleted because it has existing donations.
+            </div>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Back to Dashboard</a>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

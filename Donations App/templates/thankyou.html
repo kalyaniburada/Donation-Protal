@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="thank-you-box text-center shadow p-5 bg-white rounded">
+        <h2 class="text-success">🙏 Thank you for your donation!</h2>
+        <p class="lead mt-3">
+            Your support means a lot to us. We'll use your contribution wisely.
+        </p>
+        <a href="{% url 'education' %}" class="btn btn-outline-success mt-4">
+            Donate Again
+        </a>
+    </div>
+</div>
+{% endblock %}

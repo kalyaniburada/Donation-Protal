@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="text-center">
+        <h2>Welcome, {{ request.user.username }} (Donor)</h2>
+        <p>Thank you for contributing! Here's your donation dashboard and trusted organizations.</p>
+    </div>
+
+    <!-- Donation Categories -->
+    <div class="row justify-content-center">
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'education' %}" class="card-heading">Education Support</a>
+        </div>
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'food' %}" class="card-heading">Food Relief Donation</a>
+        </div>
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'clothes' %}" class="card-heading">Winter Clothes Drive</a>
+        </div>
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'medical' %}" class="card-heading">Medical Aid Donation</a>
+        </div>
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'infrastructure' %}" class="card-heading">Infrastructure Development (School)</a>
+        </div>
+        <div class="col-5 col-md-3 btn-box m-3">
+            <a href="{% url 'shelter' %}" class="card-heading">Shelter Support</a>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- Organization Section -->
+    <h3 class="text-center mb-4">Explore Trusted Organizations</h3>
+
+    <!-- Category Filter -->
+    <div class="mb-4 text-center">
+        <label for="categorySelect" class="form-label">Filter by Category</label>
+        <select id="categorySelect" class="form-select w-50 mx-auto" onchange="filterByCategory()">
+            <option value="all">All Categories</option>
+            <option value="food">Food Relief</option>
+            <option value="temple">Temples</option>
+            <option value="education">Education</option>
+            <option value="medical">Medical</option>
+            <option value="clothes">Clothing</option>
+            <option value="shelter">Shelter</option>
+            <option value="infrastructure">Infrastructure</option>
+        </select>
+    </div>
+
+    <!-- Organizations Grid -->
+    <div class="row" id="organizationGrid">
+        {% for org in organizations %}
+        <div class="col-md-4 mb-4 organization-card" data-category="{{ org.category }}">
+            <div class="card h-100 shadow-sm">
+                {% if org.image %}
+                <img src="{{ org.image.url }}" class="card-img-top" alt="{{ org.name }}" style="max-height:200px; object-fit:contain; background-color:#fff; padding:10px;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ org.name }}</h5>
+                    <p class="card-text text-muted">{{ org.get_category_display }}</p>
+                    <a href="{{ org.website_url }}" target="_blank" class="btn btn-primary">Visit Website</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function filterByCategory() {
+    const selectedCategory = document.getElementById('categorySelect').value;
+    const cards = document.querySelectorAll('.organization-card');
+
+    cards.forEach(card => {
+        if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<style>
+    body {
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+
+    .btn-box {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        padding: 20px;
+        width: 260px;
+        height: 120px;
+        font-size: 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: 0.3s ease;
+    }
+
+    .card-heading {
+        color: #ffffff;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .btn-box:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+</style>
+
+{% endblock %}

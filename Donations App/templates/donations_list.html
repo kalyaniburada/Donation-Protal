@@ -1,0 +1,29 @@
+<!-- donations_list.html -->
+
+
+  {% extends 'base.html' %}
+  {% block content %}
+  {% for donation in donations %}
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          {% if not donation.anonymous %}
+            {{ donation.donor }}
+          {% else %}
+            Anonymous
+          {% endif %}
+        </h5>
+        <p class="card-text"><strong>Type:</strong> {{ donation.type }}</p>
+        <p class="card-text"><strong>Amount/Items:</strong> {{ donation.amount }}</p>
+        <p class="card-text"><strong>Campaign:</strong> {{ donation.campaign }}</p>
+        {% if donation.message %}
+        <p class="card-text"><strong>Message:</strong> "{{ donation.message }}"</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+{% endblock %}
+

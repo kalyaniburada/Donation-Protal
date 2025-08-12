@@ -1,0 +1,27 @@
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h2>All Donations (Admin View)</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Donor</th>
+                <th>Campaign</th>
+                <th>Amount (₹)</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donation in donations %}
+            <tr>
+                <td>{{ donation.donor.username }}</td>
+                <td>{{ donation.campaign.title }}</td>
+                <td>{{ donation.amount }}</td>
+                <td>{{ donation.donated_at|date:"d M Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

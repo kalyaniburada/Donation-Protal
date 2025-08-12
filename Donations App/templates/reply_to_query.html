@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>✉️ Reply to {{ query.name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send Reply</button>
+        <a href="{% url 'view_queries' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

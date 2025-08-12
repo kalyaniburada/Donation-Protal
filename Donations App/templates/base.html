@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donations Portal</title>
+    <!-- ✅ Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'dashboard' %}">Donations Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user.is_staff %}
+                            <li class="nav-item"><a class="nav-link"  href="{% url 'create_campaign' %}">Create Campaign</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff %}
+                            <li class="nav-item"><a class="nav-link"  href="{% url 'approved_list' %}">Donations List</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'my_donations' %}">My Donations</a></li>
+                        <li class="nav-item"><a class="nav-link" href ="{% url 'profile' %}">Profile</a></li>
+                        {% if user.is_authenticated and not user.is_staff %}
+                            <li class="nav-item"><a class="nav-link" href ="{% url 'contact_admin' %}">Contact Us</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff %}
+                            <li class="nav-item">
+<a class="nav-link" href="{% url 'admin_recipient_requests' %}">Recipient Requests</a>
+</li>
+
+                            <li class="nav-item"><a class="nav-link" href="{% url 'admin_approval_panel' %}">Approval Panel</a></li>
+                            <li class="nav-item" ><a class="nav-link"  href="{% url 'view_queries' %}">Contact Queries</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Optional Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

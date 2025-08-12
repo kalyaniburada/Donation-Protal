@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ request.user.username }} (Recipient)</h2>
+    <p>Here are the campaigns you're receiving help from.</p>
+    <h3 class="text-center text-info">📩 Submit Your Need</h3>
+    <a class="btn btn-primary nav-link" href="{% url 'recipient_request_form' %}">Request Help</a>
+    <a class="nav-link" href="{% url 'my_request_status' %}">My Request Status</a>
+</div>
+{% endblock %}
+
+</body>
+</html>

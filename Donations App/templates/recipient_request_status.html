@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h3>My Requests</h3>
+
+    {% if my_requests %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Aadhaar Number</th>
+                    <th>Ration Card Number</th>
+                    <th>Family Income</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in my_requests %}
+                <tr>
+                    <td>{{ r.aadhaar_number }}</td>
+                    <td>{{ r.ration_card_number }}</td>
+                    <td>₹{{ r.family_income }}</td>
+                    <td>{{ r.description }}</td>
+                    <td>
+                        {% if r.is_approved %}
+                            <span class="text-success">Approved</span>
+                        {% elif r.is_rejected %}
+                            <span class="text-danger">Rejected</span>
+                        {% else %}
+                            <span class="text-warning">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ r.created_at|date:"d M Y, h:i A" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have not submitted any requests.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h3>Recipient Requests</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Aadhaar</th>
+                <th>Ration Card</th>
+                <th>Income</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in requests %}
+            <tr>
+                <td>{{ r.user.username }}</td>
+                <td>{{ r.aadhaar_number }}</td>
+                <td>{{ r.ration_card_number }}</td>
+                <td>₹{{ r.family_income }}</td>
+                <td>{{ r.description }}</td>
+                <td>
+                    {% if r.is_approved %}
+                        Approved
+                    {% elif r.is_rejected %}
+                        Rejected
+                    {% else %}
+                        Pending
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'approve_recipient_request' r.id %}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'reject_recipient_request' r.id %}" class="btn btn-danger btn-sm">Reject</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

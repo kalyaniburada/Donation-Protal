@@ -1,0 +1,59 @@
+
+
+    {% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-primary">🎁 My Donations</h1>
+
+    {% if donations %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-info">
+                    <tr>
+                        <th>#</th>
+                        <th>Campaign</th>
+                        <th>Type</th>
+                        <th>Amount (₹)</th>
+                        <th>Date</th>
+                        <th>Status</th> <!-- ✅ Status column -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for donation in donations %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ donation.campaign.title }}</td>
+                        <td class="text-capitalize">{{ donation.donation_type }}</td>
+                        <td>
+                            {% if donation.amount %}
+                                ₹{{ donation.amount }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>{{ donation.donated_at|date:"d M Y" }}</td>
+                        <td>
+                            {% if donation.is_approved %}
+                                <span class="badge bg-success">Approved ✅</span>
+                            {% elif donation.is_rejected %}
+                                <span class="badge bg-danger">Rejected ❌</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending ⏳</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            You haven't made any donations yet.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-primary mt-3">← Back to Dashboard</a>
+</div>
+{% endblock %}
+

@@ -1,0 +1,26 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+<div class="container mt-5">
+    <h2>Contact Admin</h2>
+
+    <p><strong>Name:</strong> {{ user_name }}</p>
+    <p><strong>Email:</strong> {{ user_email }}</p>
+
+    <form method="post" class="card p-4 shadow">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary mt-2">Send Message</button>
+    </form>
+</div>
+{% endblock %}
+

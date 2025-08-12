@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>📩 Contact Queries</h2>
+
+    {% if queries %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Email</th>
+                <th>Sent At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for query in queries %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ query.name }}</td>
+                <td>{{ query.subject }}</td>
+                <td>{{ query.message }}</td>
+                <td>{{ query.email }}</td>
+                <td>{{ query.sent_at|date:"d M Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'reply_to_query' query.id %}" class="btn btn-success btn-sm">Reply</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No contact queries yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

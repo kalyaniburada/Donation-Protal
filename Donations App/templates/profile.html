@@ -1,0 +1,50 @@
+
+    {% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">User Profile</h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Username:</label>
+                <div class="col-sm-9">{{ request.user.username }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Email:</label>
+                <div class="col-sm-9">{{ request.user.email }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Role:</label>
+                <div class="col-sm-9">{{ profile.role|capfirst }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Gender:</label>
+                <div class="col-sm-9">
+                    {% if profile.gender == "M" %}Male
+                    {% elif profile.gender == "F" %}Female
+                    {% else %}Other
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Phone:</label>
+                <div class="col-sm-9">{{ profile.phone }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 fw-bold">Address:</label>
+                <div class="col-sm-9">{{ profile.address }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="{% url 'edit_profile' %}" class="btn btn-warning mt-3">Edit Profile</a>
+
+{% endblock %}
