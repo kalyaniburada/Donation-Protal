@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">🛠️ Admin Donation Approval Panel</h2>
+
+    {% if donations %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Campaign</th>
+                        <th>Purpose</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for donation in donations %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ donation.name }}</td>
+                        <td class="text-capitalize">{{ donation.donation_type }}</td>
+                        <td>
+                            {% if donation.amount %}
+                                ₹{{ donation.amount }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>{{ donation.campaign.title }}</td>
+                        <td>{{ donation.purpose }}</td>
+                        <td>{{ donation.donated_at|date:"d M Y, H:i" }}</td>
+                        <td>
+                            {% if donation.is_approved %}
+                                <span class="badge bg-success">Approved</span>
+                            {% elif donation.is_rejected %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not donation.is_approved and not donation.is_rejected %}
+                                <a href="{% url 'approve_donation' donation.id %}" class="btn btn-success btn-sm">Approve</a>
+                                <a href="{% url 'reject_donation' donation.id %}" class="btn btn-danger btn-sm">Reject</a>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No pending donations for approval.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
